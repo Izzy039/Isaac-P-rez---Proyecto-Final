@@ -1,6 +1,6 @@
 const JUMP_VELOCITY = 300;
 
-export class Dino extends Phaser.GameObjects.Sprite{
+export default class Dino extends Phaser.GameObjects.Sprite{
     constructor(scene, x, y, texture) {
         super(scene, x, y, texture);
         this.scene = scene;
@@ -10,6 +10,6 @@ export class Dino extends Phaser.GameObjects.Sprite{
     }
 
     jump(){
-        this.body.velocity.y = JUMP_VELOCITY;
+        this.body.velocity.y = -    JUMP_VELOCITY;
     }
 }

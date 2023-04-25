@@ -19,11 +19,15 @@ create(){
         this.add.image(0, 0, "sky").setOrigin(0);
         //Dino
         this.dino = new Dino (this, 100, this.config.height/2, "dino");
-        this.physics.add.existing(dino);
-
-        this.dino.body.velocity.x = 50;
-        this.physics.add.collider(dino);
+        this.dino.body.velocity.x = 200  ;
+        this.physics.add.collider(this.dino, this.gameOver, null, this);
         this.dino.body.setCollideWorldBounds(true);
     }
+
+    gameOver(){
+        alert("You lose");
+        //Reinicia la escena
+        this.scene.restart();
+      }
 
 }
