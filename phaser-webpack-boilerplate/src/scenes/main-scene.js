@@ -1,4 +1,4 @@
-class GameScene extends Phaser.Scene{
+export default class GameScene extends Phaser.Scene{
     constructor(config){
         console.log("This is the main game scene");
         super(config);
@@ -35,5 +35,3 @@ create(){
     }*/
 
 }
-
-export default GameScene
