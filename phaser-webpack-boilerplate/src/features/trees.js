@@ -71,7 +71,7 @@ export default class TreeSystem {
         tree.setVelocity(TREE_VELOCITY);
         tree.setVisible(true);
         this.trees.push(tree);
-        console.log(this.trees);
+        //console.log(this.trees);
     }
 
     moveToPool(tree, index){
@@ -90,6 +90,8 @@ class Tree {
         this.treeSpawnPositionRange = TREE_SPAWN_RANGE;
         var spawnPosition = Phaser.Math.Between(...this.treeSpawnPositionRange);
         this.lower = group.create(spawnX, spawnPosition, "tree").setOrigin(0, 1);
+        //Intento de corregir el tamaño del sprite, necesita corregirse
+        this.lower.setScale(1);
     }
 
     resetPosition(){
