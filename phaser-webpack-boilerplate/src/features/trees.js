@@ -89,9 +89,10 @@ class Tree {
         this.spawnX = spawnX;
         this.treeSpawnPositionRange = TREE_SPAWN_RANGE;
         var spawnPosition = Phaser.Math.Between(...this.treeSpawnPositionRange);
-        this.lower = group.create(spawnX, spawnPosition, "tree").setOrigin(0, 1);
-        //Intento de corregir el tamaño del sprite, necesita corregirse
-        this.lower.setScale(1);
+        this.lower = group.create(spawnX, spawnPosition, "trees").setOrigin(0, 1);
+        //Da escala aleatoria a los obstáculos
+        var randomScale = Phaser.Math.Between(50, 150) / 100;
+        this.lower.setScale(randomScale);
     }
 
     resetPosition(){
