@@ -1,6 +1,7 @@
-const TREE_SPAWN_TIME = 1000;
+const TREE_SPAWN_TIME = 1500;
 const TREE_VELOCITY = 200;
-const TREE_SPAWN_RANGE = [800, 300];
+//Algunos obstáculos aparecen demasiado abajo
+const TREE_SPAWN_RANGE = [650, 250];
 
 export default class TreeSystem {
     constructor(scene, layer){

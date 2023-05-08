@@ -24,9 +24,10 @@ create(){
         this.dino = new Dino (this, 100, this.config.height/2, "dino");
         this.layers.game.add(this.dino);
         this.treeSystem = new TreeSystem (this, this.layers.game);
-        this.dino.body.velocity.x = 10;
+        //El sprite se mueve demasiado rápido en pantalla con esta velocidad
+        //this.dino.body.velocity.x = 10;
         this.dinoCollision = this.physics.add.collider(this.dino, this.treeSystem.group, this.gameOver, null, this);
-        //Evita que salga del canvas
+        //Evita que el sprite se salga del canvas
         this.dino.body.setCollideWorldBounds(true);
         this.score = new Score(this, 16, 16, this.layers.ui);
         this.treeSystem.onTreeExit = ()=>{
