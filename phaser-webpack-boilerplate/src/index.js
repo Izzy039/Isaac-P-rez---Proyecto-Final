@@ -10,10 +10,11 @@ const GLOBAL_CONFIG = {
 const config = {
   type: Phaser.AUTO,
   ...GLOBAL_CONFIG,
+  pixelArt: true,
   physics: {
     default: "arcade",
     arcade: {
-      debug: false,
+      debug: true,
       gravity: {y: 400}
     }
   },
