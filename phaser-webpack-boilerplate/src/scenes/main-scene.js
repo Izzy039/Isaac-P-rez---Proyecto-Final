@@ -16,6 +16,7 @@ preload(){
   this.load.image("sky", "assets/SkySunset.png")
   this.load.image("dino", "assets/Dino1.png")
   this.load.image("trees", "assets/meteor.png")
+  this.load.image("obstacle", "assets/tree.png")
 }
 
 create(){
