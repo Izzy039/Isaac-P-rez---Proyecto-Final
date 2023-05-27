@@ -1,9 +1,9 @@
 const TREE_SPAWN_TIME = 2500;
 const TREE_VELOCITY = 200;
 //Algunos obstáculos aparecen demasiado abajo
-const TREE_SPAWN_RANGE = [650, 250];
-const BOTTOM_OBSTACLE_SPAWN_RANGE = [550, 600]; // Adjust the range as needed
-const BOTTOM_OBSTACLE_SPAWN_TIME = 1500;
+const TREE_SPAWN_RANGE = [650, 250]; //Rango de aparición de meteoritos
+const BOTTOM_OBSTACLE_SPAWN_RANGE = [550, 600]; //Rangos de aparición de árboles
+const BOTTOM_OBSTACLE_SPAWN_TIME = 3000;
 const BOTTOM_OBSTACLE_VELOCITY = 100;
 
 export default class TreeSystem {
