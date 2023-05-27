@@ -159,6 +159,7 @@ export default class TreeSystem {
 
 }
 
+//Obstáculos aéreos, se llama Tree porque originalmente solo iba a poner árboles.
 class Tree {
     constructor(group, spawnX, layer){
         this.group = group;
@@ -193,6 +194,7 @@ class Tree {
     }
 }
 
+//Obstáculos de piso, árboles.
 class BottomObstacle{
     constructor(group, spawnX, layer) {
         this.group = group;

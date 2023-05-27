@@ -105,25 +105,59 @@ create(){
     // Reinicio del juego
     this.isPaused = false;
     this.treeSystem.stop();
-    this.dinoCollision.destroy();
+    //this.dinoCollision.destroy(); (removemos para reemplazarlo por lógica que reinicie el collider tras perder)
+    if (this.dinoCollision) {
+      this.physics.world.removeCollider(this.dinoCollision);
+      this.dinoCollision = null;
+    }
     this.scene.restart();
+  }
+
+  createGameOverMenu() {
+    const retryButtonCallbacks = {
+      onClick: this.restartGame.bind(this),
+      onMouseEnter: text => text.setFill("#0F0"),
+      onMouseExit: text => text.setFill("#FFF"),
+    };
+  
+    const quitButtonCallbacks = {
+      onClick: this.quitGame.bind(this),
+      onMouseEnter: text => text.setFill("#F00"),
+      onMouseExit: text => text.setFill("#FFF"),
+    };
+  
+    const gameOverMenu = {
+      items: [
+        { label: "Retry", style: { fontSize: "32px", fill: "#FFF" }, ...retryButtonCallbacks },
+        { label: "Quit", style: { fontSize: "32px", fill: "#FFF" }, ...quitButtonCallbacks },
+      ],
+      firstItemPosition: { x: this.config.width / 2, y: this.config.height / 2 },
+      origin: { x: 0.5, y: 0.5 },
+      spacing: 45,
+    };
+  
+    this.showMenu(gameOverMenu);
   }
 
     gameOver(){
       //Fin del juego
-        alert("You lose");
+        //alert("You lose");
         this.treeSystem.stop();
         this.dinoCollision.destroy();
         //Reinicia la escena
-        this.scene.restart();
-        this.scene.start("MenuScene")
+        //this.scene.restart();
+        this.createGameOverMenu();
       }
 
       quitGame() {
         //Regresa al menú al presionar "Quit"
         this.isPaused = false;
         this.treeSystem.stop();
-        this.dinoCollision.destroy();
+       //this.dinoCollision.destroy();
+       if (this.dinoCollision) {
+        this.physics.world.removeCollider(this.dinoCollision);
+        this.dinoCollision = null;
+      }
         this.scene.start("MenuScene")
       }
 }  
