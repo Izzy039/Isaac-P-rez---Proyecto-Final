@@ -8,6 +8,7 @@ export default class TrexScene extends Phaser.Scene{
             ui: null,
         }
         this.activeMenu = null;
+        //this.layer = null;
     }
 
     create (){
@@ -21,6 +22,7 @@ export default class TrexScene extends Phaser.Scene{
     showMenu(menu) {
         let yPos = menu.firstItemPosition.y;
         this.activeMenu = this.add.group();
+        
         menu.items.forEach(item => {
             const textObject = this.add.text(menu.firstItemPosition.x, yPos, item.label, item.style)
             .setOrigin(menu.origin.x, menu.origin.y)
@@ -31,5 +33,10 @@ export default class TrexScene extends Phaser.Scene{
             textObject.on("pointerover", ()=> {item.onMouseExit(textObject)}, this);
             this.activeMenu.add(textObject);
         });
+    }
+
+    hideMenu() {
+        if(this.activeMenu) this.activeMenu.clear(true, true);
+        this.activeMenu = null;
     }
 }

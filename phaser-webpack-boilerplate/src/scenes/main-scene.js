@@ -10,11 +10,13 @@ export default class GameScene extends TrexScene{
         this.treeSystem = null;
         this.dinoCollision = null;
         this.pauseButton = null;
+        this.isGameOver = null;
+        this.isPaused = false;
     }
 
 preload(){
   //Carga assets
-  this.load.image("sky", "assets/SkySunset.png")
+  //this.load.image("sky", "assets/SkySunset.png")
   this.load.spritesheet("dino", "assets/Dino1_Spritesheet.png", {frameWidth: 96, frameHeight: 96}) 
   this.load.image("trees", "assets/meteor.png")
   this.load.image("obstacle", "assets/tree-1.png")
@@ -32,7 +34,8 @@ create(){
         this.dinoCollision = this.physics.add.collider(this.dino, this.treeSystem.group, this.gameOver, null, this);
         //Evita que el sprite se salga del canvas
         this.dino.body.setCollideWorldBounds(true);
-        this.pauseButton = this.add.sprite(this.config.width - 16, 16, "pauseButton").setInteractive();
+        this.pauseButton = this.add.sprite(this.config.width - 32, 32, "pauseButton").setInteractive();
+        this.pauseButton.setScale(3);
         this.pauseButton.on("pointerup", this.pause, this);
         this.score = new Score(this, 16, 16, this.layers.ui);
         this.treeSystem.onTreeExit = ()=>{
@@ -44,7 +47,7 @@ create(){
     }
     
 
-  update() {
+  update(time, delta) {
     if(this.isGameOver || this.isPaused) return;
 
         this.treeSystem.update();
@@ -53,18 +56,75 @@ create(){
         });
 }
 
+    pause() {
+      this.physics.pause();
+      this.treeSystem.pause();
+      this.isPaused = true;
+      this.pauseButton.setVisible(false);
+
+    const continueButtonCallbacks = {
+      onClick: this.resume,
+      onMouseEnter: text => text.setFill("#0F0"),
+      onMouseExit: text => text.setFill("#FFF"),
+  }
+
+    const quitButtonCallbacks = {
+      onClick: this.quitGame,
+      onMouseEnter: text => text.setFill("#F00"),
+      onMouseExit: text => text.setFill("#FFF"),
+    }
+
+    const pauseMenu = {
+      items: [
+        {label: "Continue", style: {sontSize: "32px", fill: "#FFF"}, ...continueButtonCallbacks},
+        {label: "Quit", style: {sontSize: "32px", fill: "#FFF"}, ...quitButtonCallbacks},
+    ],
+
+
+    firstItemPosition: {x: this.config.width / 2, y: this.config.height / 2},
+    origin: {x: 0.5, y: 0.5},
+    spacing: 45
+    }
+
+    this.showMenu(pauseMenu);
+    }
+
+    resume(){
+      //Para resumir el juego
+      this.physics.resume();
+      this.treeSystem.resume();
+      this.isPaused = false;
+      this.pauseButton.setVisible(true);
+      this.hideMenu();
+    }
+
+
+
+  restartGame() {
+    // Reinicio del juego
+    this.isPaused = false;
+    this.treeSystem.stop();
+    this.dinoCollision.destroy();
+    this.scene.restart();
+  }
+
     gameOver(){
+      //Fin del juego
         alert("You lose");
         this.treeSystem.stop();
         this.dinoCollision.destroy();
         //Reinicia la escena
         this.scene.restart();
+        this.scene.start("MenuScene")
       }
 
-      pause() {
-        this.physics.pause();
-        this.treeSystem.pause();
-        this.isPaused = true;
-        this.pauseButton.setVisible(false);
+      quitGame() {
+        //Regresa al menú al presionar "Quit"
+        this.isPaused = false;
+        this.treeSystem.stop();
+        this.dinoCollision.destroy();
+        this.scene.start("MenuScene")
       }
-}
+}  
+    
+     
