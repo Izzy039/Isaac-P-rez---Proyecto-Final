@@ -1,8 +1,8 @@
 const TREE_SPAWN_TIME = 3500;
 const TREE_VELOCITY = 200;
-//Algunos obstáculos aparecen demasiado abajo
-const TREE_SPAWN_RANGE = [750, 250]; //Rango de aparición de meteoritos
-const BOTTOM_OBSTACLE_SPAWN_RANGE = [550, 600]; //Rangos de aparición de árboles
+//Algunos obstáculos aparecen demasiado abajo, aún necesita ajustarse
+const TREE_SPAWN_RANGE = [700, 250]; //Rango de aparición de meteoritos
+const BOTTOM_OBSTACLE_SPAWN_RANGE = [650, 575]; //Rangos de aparición de árboles
 const BOTTOM_OBSTACLE_SPAWN_TIME = 5000;
 const BOTTOM_OBSTACLE_VELOCITY = 100;
 
@@ -200,6 +200,8 @@ class BottomObstacle{
         this.obstacleSpawnPositionRange = BOTTOM_OBSTACLE_SPAWN_RANGE;
         var spawnPosition = Phaser.Math.Between(...this.obstacleSpawnPositionRange);
         this.obstacle = group.create(spawnX, spawnPosition, "obstacle").setOrigin(0, 1);
+        var randomScale = Phaser.Math.Between(50, 150) / 100;
+        this.obstacle.setScale(randomScale);
     }
 
     resetPosition(){

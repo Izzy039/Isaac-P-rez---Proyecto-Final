@@ -2,6 +2,7 @@
 import Phaser, { Scenes } from "phaser";
 import GameScene from "./scenes/main-scene";
 import MenuScene from "./scenes/mainmenu-scene";
+import ScoreScene from "./scenes/score-scene";
 
 const GLOBAL_CONFIG = {
   width: 800,
@@ -21,7 +22,8 @@ const config = {
   },
   scene: [
     new MenuScene(GLOBAL_CONFIG),
-    new GameScene(GLOBAL_CONFIG)
+    new GameScene(GLOBAL_CONFIG),
+    new ScoreScene(GLOBAL_CONFIG)
   ]
 }
 new Phaser.Game(config);

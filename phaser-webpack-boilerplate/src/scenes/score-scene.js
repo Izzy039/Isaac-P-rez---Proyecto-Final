@@ -3,6 +3,7 @@ import TrexScene from "./trex-scene";
 export default class ScoreScene extends TrexScene{
     constructor(config) {
         super("ScoreScene", config);
+        //Jaja, el botón de score carga la escena, aún no averiguo porqué
     }
 
     create() {

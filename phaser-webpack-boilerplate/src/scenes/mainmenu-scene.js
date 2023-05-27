@@ -42,6 +42,7 @@ export default class MenuScene extends TrexScene {
 
     scoreButton_OnClick() {
         this.scene.start("ScoreScene");
+         //Jaja, el botón de score carga la escena, aún no averiguo porqué
     }
 
     anyButton_OnMouseEnter(text) {
