@@ -11,10 +11,10 @@ export default class Score {
     this.highScoreText = scene.add.text(x, y + 12, HIGH_SCORE_LABEL + this.highScoreValue).setOrigin(0);
     layer.add([this.currentScoreText, this.highScoreText]);
 
-    // Start the score increment timer
+    // Configura el timer del score
     this.scoreInterval = setInterval(() => {
-      this.addScore(1); // Increase the score by 1 every 50 milliseconds
-      this.checkHighScore(); // Check and update the high score if necessary
+      this.addScore(1); // Incrementa el score cada 50milisegundos
+      this.checkHighScore(); // Revisa el score constantemente
     }, 50);
   }
 

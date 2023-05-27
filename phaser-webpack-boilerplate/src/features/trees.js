@@ -1,9 +1,9 @@
-const TREE_SPAWN_TIME = 2500;
+const TREE_SPAWN_TIME = 3500;
 const TREE_VELOCITY = 200;
 //Algunos obstáculos aparecen demasiado abajo
-const TREE_SPAWN_RANGE = [650, 250]; //Rango de aparición de meteoritos
+const TREE_SPAWN_RANGE = [750, 250]; //Rango de aparición de meteoritos
 const BOTTOM_OBSTACLE_SPAWN_RANGE = [550, 600]; //Rangos de aparición de árboles
-const BOTTOM_OBSTACLE_SPAWN_TIME = 3000;
+const BOTTOM_OBSTACLE_SPAWN_TIME = 5000;
 const BOTTOM_OBSTACLE_VELOCITY = 100;
 
 export default class TreeSystem {
@@ -31,12 +31,12 @@ export default class TreeSystem {
 
     start(){
         this.clearPool();
-        this.spawnTree();
+        //this.spawnTree();
         this.spawnBottomObstacle();
         this.spawnTimer = this.scene.time.addEvent({
             delay: TREE_SPAWN_TIME,
             callback: ()=> {
-                this.spawnTree();
+                //this.spawnTree();
             },
             loop: true
         });
@@ -48,6 +48,19 @@ export default class TreeSystem {
             },
             loop: true,
           });
+
+          this.scene.time.delayedCall(10000, this.startTreeSpawning, [], this);
+        }
+
+        startTreeSpawning() {
+            this.spawnTree();
+            this.spawnTimer = this.scene.time.addEvent({
+                delay: TREE_SPAWN_TIME,
+                callback: () => {
+                    this.spawnTree();
+                },
+                loop: true
+            });
         }
 
     stop() {

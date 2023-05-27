@@ -28,6 +28,7 @@ create(){
         super.create();
         this.dino = new Dino (this, 100, this.config.height/2, "dino");
         this.layers.game.add(this.dino);
+        //Llama al Tree System, el delay parece no estar funcionando
         this.treeSystem = new TreeSystem (this, this.layers.game);
         //El sprite se mueve demasiado rápido en pantalla con esta velocidad
         //this.dino.body.velocity.x = 10;
@@ -43,7 +44,7 @@ create(){
         }
 
         //Inicia treeSystem
-        this.treeSystem.start(); 
+        this.treeSystem.start();
     }
     
 
