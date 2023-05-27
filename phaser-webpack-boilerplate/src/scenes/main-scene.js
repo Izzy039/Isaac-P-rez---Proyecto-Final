@@ -67,5 +67,4 @@ create(){
         this.isPaused = true;
         this.pauseButton.setVisible(false);
       }
-
 }
