@@ -15,6 +15,19 @@ export default class Dino extends Phaser.GameObjects.Sprite{
         this.defaultScale = this.scaleX;
         this.isDucked = false;
         this.blocked = false;
+        this.anims.create({
+            key: "run",
+            frames: this.anims.generateFrameNumbers("dino", {start: 0, end: 6}),
+            frameRate: 8,
+            repeat: -1
+        });
+        this.anims.create({
+            key: "duck",
+            frames: this.anims.generateFrameNumbers("dino", {start: 7, end: 12}),
+            frameRate: 8,
+            repeat: -1
+        });
+        this.play("run");
     }
 
     //Salto
@@ -28,9 +41,11 @@ export default class Dino extends Phaser.GameObjects.Sprite{
         if(this.isDucked) {
             this.setScale(this.defaultScale);
             this.isDucked = false;
+            this.play("run");
         }
         else {
-            this.setScale(Math.max(this.scaleX * 0.5, MINIMAL_SCALE));
+            this.setScale(Math.max(this.scaleX * 0.75, MINIMAL_SCALE));
+            this.play("duck");
             this.isDucked = true;
         }
         

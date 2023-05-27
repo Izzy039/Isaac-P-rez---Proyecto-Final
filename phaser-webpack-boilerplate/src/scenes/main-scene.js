@@ -9,14 +9,16 @@ export default class GameScene extends TrexScene{
         this.dino = null;
         this.treeSystem = null;
         this.dinoCollision = null;
+        this.pauseButton = null;
     }
 
 preload(){
   //Carga assets
   this.load.image("sky", "assets/SkySunset.png")
-  this.load.image("dino", "assets/Dino1.png")
+  this.load.spritesheet("dino", "assets/Dino1_Spritesheet.png", {frameWidth: 96, frameHeight: 96}) 
   this.load.image("trees", "assets/meteor.png")
-  this.load.image("obstacle", "assets/tree.png")
+  this.load.image("obstacle", "assets/tree-1.png")
+  this.load.image("pauseButton", "assets/pause.png");
 }
 
 create(){
@@ -30,6 +32,8 @@ create(){
         this.dinoCollision = this.physics.add.collider(this.dino, this.treeSystem.group, this.gameOver, null, this);
         //Evita que el sprite se salga del canvas
         this.dino.body.setCollideWorldBounds(true);
+        this.pauseButton = this.add.sprite(this.config.width - 16, 16, "pauseButton").setInteractive();
+        this.pauseButton.on("pointerup", this.pause, this);
         this.score = new Score(this, 16, 16, this.layers.ui);
         this.treeSystem.onTreeExit = ()=>{
           this.score.addScore(1);
@@ -60,8 +64,8 @@ create(){
       pause() {
         this.physics.pause();
         this.treeSystem.pause();
-        //this.isPaused = true;
-        // this.pauseButton.setVisible(false);
+        this.isPaused = true;
+        this.pauseButton.setVisible(false);
       }
 
 }
