@@ -9,6 +9,8 @@ export default class Dino extends Phaser.GameObjects.Sprite{
         scene.add.existing(this);
         scene.physics.add.existing(this);
         this.body.immovable = true;
+        this.canJump = true;
+        this.isTouchingFloor = false;
         scene.input.keyboard.on("keydown-SPACE", this.jump, this);
         scene.input.keyboard.on("keydown-W", this.jump, this)
         scene.input.keyboard.on("keydown-S", this.duck, this);
@@ -30,13 +32,25 @@ export default class Dino extends Phaser.GameObjects.Sprite{
         this.play("run");
     }
 
-    //Salto
+    touchingFloor(onFloor) {
+    this.isTouchingFloor = onFloor;
+  }
+
+    //Salto le da velocidad al sprite en Y
     jump(){
-        this.body.velocity.y = -JUMP_VELOCITY;
+        if (this.canJump) {
+            this.body.velocity.y = -JUMP_VELOCITY;
+            this.canJump = false;
+            this.anims.pause();
+            this.scene.time.delayedCall(2000, () => {
+                this.canJump = true;
+                this.anims.resume(); //Resume animaciones y resetea el booleano de salto tras 2 segundos
+              });
+          }
     }
 
     //Agacharse, por el momento solo se reduce la escala
-    //En la escala mínima el collider sale del canvas, lo cual triggerea un Game Over
+    //Al cambiar de escala el collider a veces sale del canvas, lo cual triggerea un Game Over
     duck(){
         if(this.isDucked) {
             this.setScale(this.defaultScale);

@@ -17,11 +17,13 @@ export default class Score {
     // Configura el timer del score
     this.scoreInterval = null
   }
+  //Añade el valor de score
     addScore(amount) {
       this.currentScoreValue += amount;
       this.currentScoreText.setText(CURRENT_SCORE_LABEL + this.currentScoreValue);
     }
   
+    //Revisa el High Score
     checkHighScore() {
       if (this.currentScoreValue > this.highScoreValue) {
         this.highScoreValue = this.currentScoreValue;
@@ -29,7 +31,9 @@ export default class Score {
         localStorage.setItem(HIGH_SCORE_SAVE_KEY, this.highScoreValue);
       }
     }
-  
+    
+    //Función para empezar el score
+    //Aumenta cada 50 milisegundos
     startUpdates() {
       this.scoreInterval = setInterval(() => {
         if (!this.isPaused) {
@@ -38,19 +42,23 @@ export default class Score {
         }
       }, 50);
     }
-  
+    
+    //Función para parar el score
     stopUpdates() {
       clearInterval(this.scoreInterval);
     }
-  
+    
+    //Función para resumir actualización del score
     resumeUpdates() {
       this.startUpdates();
     }
   
+    //Función para pausar los updates
     pauseUpdates() {
       clearInterval(this.scoreInterval);
     }
   
+    //Función para parar la actualización
     stop() {
       this.stopUpdates();
       this.isStopped = true;
