@@ -17,6 +17,8 @@ export default class GameScene extends TrexScene{
 preload(){
   //Carga assets
   //this.load.image("sky", "assets/SkySunset.png")
+  //Hay una advertencia en la consola de que falta el frame 5 en la spritesheet, no sé si tenga que ver que esta es cuadrada
+  //El sprite del dino agachado no cambia tanto, pero juro que es diferente jaja
   this.load.spritesheet("dino", "assets/Dino1_Spritesheet.png", {frameWidth: 96, frameHeight: 96}) 
   this.load.image("trees", "assets/meteor.png")
   this.load.image("obstacle", "assets/tree-1.png")
@@ -125,8 +127,6 @@ create(){
       this.pauseButton.setVisible(true);
       this.score.resumeUpdates();
       this.hideMenu();
-
-      //console.log("Resuming");
     }
 
   // Reinicio del juego
@@ -175,6 +175,7 @@ create(){
     this.showMenu(gameOverMenu);
   }
 
+  //Función de Game Over
     gameOver(){
       //Fin del juego
       //Comentado todo lo que ya no es relevante para la pantalla de Game Over
@@ -187,6 +188,7 @@ create(){
         this.score.stopUpdates();
       }
 
+      //Función para salir del juego
       quitGame() {
         //Regresa al menú al presionar "Quit"
         this.isPaused = false;
