@@ -39,6 +39,7 @@ create(){
         this.pauseButton.setScale(3);
         this.pauseButton.on("pointerup", this.pause, this);
         this.score = new Score(this, 16, 16, this.layers.ui);
+        this.score.startUpdates();
         this.treeSystem.onTreeExit = ()=>{
           this.score.addScore(1);
         }
@@ -49,19 +50,45 @@ create(){
     
 
   update(time, delta) {
-    if(this.isGameOver || this.isPaused) return;
+    if(this.isGameOver || this.isPaused) {
+      return;
+    }
 
         this.treeSystem.update();
         this.dino.checkOffbounds(() => {
           this.gameOver();
         });
-}
 
+          this.score.update();
+    }
+
+    //Funciones para resumir y pausar el score
+    pauseScore(){
+      this.score.pauseUpdates();
+    }
+
+    resumeScore(){
+      this.score.resumeUpdates();
+    }
+
+    //Pausa del juego
     pause() {
       this.physics.pause();
       this.treeSystem.pause();
       this.isPaused = true;
       this.pauseButton.setVisible(false);
+      this.score.pauseUpdates();
+
+      //El texto no desaparece de la pantalla al salir de la pausa
+      //Agregarlo al layer de UI rompe algo, por ahora lo comentaré mientras encuentro un arreglo al problema
+      /*const pauseText = this.add.text(
+        this.config.width / 2,
+        this.config.height / 2 - 100,
+        "Pause",
+        {fontSize: "48px", fill: "#FFF"}
+      );
+      pauseText.setOrigin(0.5);
+      this.layers.ui.add(this.pauseText);*/
 
     const continueButtonCallbacks = {
       onClick: this.resume,
@@ -90,19 +117,20 @@ create(){
     this.showMenu(pauseMenu);
     }
 
+    //Para resumir el juego
     resume(){
-      //Para resumir el juego
       this.physics.resume();
       this.treeSystem.resume();
       this.isPaused = false;
       this.pauseButton.setVisible(true);
+      this.score.resumeUpdates();
       this.hideMenu();
+
+      //console.log("Resuming");
     }
 
-
-
+  // Reinicio del juego
   restartGame() {
-    // Reinicio del juego
     this.isPaused = false;
     this.treeSystem.stop();
     //this.dinoCollision.destroy(); (removemos para reemplazarlo por lógica que reinicie el collider tras perder)
@@ -114,6 +142,14 @@ create(){
   }
 
   createGameOverMenu() {
+    const gameOverText = this.add.text(
+      this.config.width / 2,
+      this.config.height / 2 - 100,
+      "You are exctinct!",
+      {fontSize: "48px", fill: "#FFF"}
+    );
+    gameOverText.setOrigin(0.5);
+
     const retryButtonCallbacks = {
       onClick: this.restartGame.bind(this),
       onMouseEnter: text => text.setFill("#0F0"),
@@ -141,12 +177,14 @@ create(){
 
     gameOver(){
       //Fin del juego
+      //Comentado todo lo que ya no es relevante para la pantalla de Game Over
         //alert("You lose");
         this.treeSystem.stop();
         this.dinoCollision.destroy();
         //Reinicia la escena
         //this.scene.restart();
         this.createGameOverMenu();
+        this.score.stopUpdates();
       }
 
       quitGame() {
@@ -160,6 +198,4 @@ create(){
       }
         this.scene.start("MenuScene")
       }
-}  
-    
-     
+}       
