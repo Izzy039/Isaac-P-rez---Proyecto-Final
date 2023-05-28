@@ -36,21 +36,24 @@ export default class Dino extends Phaser.GameObjects.Sprite{
     this.isTouchingFloor = onFloor;
   }
 
-    //Salto le da velocidad al sprite en Y
+    //La función de salto le da velocidad al sprite en Y, solo si el booleano "canJump" es verdadero.
+    //Además pausa las animaciones para evitar que el Dino camine en el aire
     jump(){
         if (this.canJump) {
             this.body.velocity.y = -JUMP_VELOCITY;
             this.canJump = false;
             this.anims.pause();
+            //Resume animaciones y resetea el booleano de salto tras 2 segundos
             this.scene.time.delayedCall(2000, () => {
                 this.canJump = true;
-                this.anims.resume(); //Resume animaciones y resetea el booleano de salto tras 2 segundos
+                this.anims.resume();
               });
           }
     }
 
-    //Agacharse, por el momento solo se reduce la escala
-    //Al cambiar de escala el collider a veces sale del canvas, lo cual triggerea un Game Over
+    //Agacharse reduce la escala y cambia de animación
+    //El juego es considerablemente más fácil agachado jaja
+    //Al cambiar de escala, el collider a veces sale del canvas, lo cual triggerea un Game Over
     duck(){
         if(this.isDucked) {
             this.setScale(this.defaultScale);
