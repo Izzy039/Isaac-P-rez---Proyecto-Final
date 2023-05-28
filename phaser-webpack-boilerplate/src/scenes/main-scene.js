@@ -16,8 +16,7 @@ export default class GameScene extends TrexScene{
 
 preload(){
   //Carga assets
-  //this.load.image("sky", "assets/SkySunset.png")
-  //Hay una advertencia en la consola de que falta el frame 5 en la spritesheet, no sé si tenga que ver que esta es cuadrada
+  //Hay una advertencia en la consola de que falta el frame 5 en la spritesheet del Dino, no sé si tenga que ver que esta es cuadrada
   //El sprite del dino agachado no cambia tanto, pero juro que es diferente jaja
   this.load.spritesheet("dino", "assets/Dino1_Spritesheet.png", {frameWidth: 96, frameHeight: 96}) 
   this.load.image("trees", "assets/meteor.png")
@@ -30,16 +29,18 @@ create(){
         super.create();
         this.dino = new Dino (this, 100, this.config.height/2, "dino");
         this.layers.game.add(this.dino);
-        //Llama al Tree System, el delay parece no estar funcionando
+        //Llama al Tree System
         this.treeSystem = new TreeSystem (this, this.layers.game);
         //El sprite se mueve demasiado rápido en pantalla con esta velocidad
         //this.dino.body.velocity.x = 10;
         this.dinoCollision = this.physics.add.collider(this.dino, this.treeSystem.group, this.gameOver, null, this);
-        //Evita que el sprite se salga del canvas
+        //Evita que el sprite del Dino se salga del canvas
         this.dino.body.setCollideWorldBounds(true);
+        //Crea botón de pausa
         this.pauseButton = this.add.sprite(this.config.width - 32, 32, "pauseButton").setInteractive();
         this.pauseButton.setScale(3);
         this.pauseButton.on("pointerup", this.pause, this);
+        //Crea el score en pantalla e inicializa el conteo
         this.score = new Score(this, 16, 16, this.layers.ui);
         this.score.startUpdates();
         this.treeSystem.onTreeExit = ()=>{
@@ -50,7 +51,7 @@ create(){
         this.treeSystem.start();
     }
     
-
+  //Checa si se está en pausa o en Game Over y actualiza el score
   update(time, delta) {
     if(this.isGameOver || this.isPaused) {
       return;
@@ -141,6 +142,7 @@ create(){
     this.scene.restart();
   }
 
+  //Crea pantalla de Game Over
   createGameOverMenu() {
     const gameOverText = this.add.text(
       this.config.width / 2,
@@ -177,13 +179,11 @@ create(){
 
   //Función de Game Over
     gameOver(){
-      //Fin del juego
-      //Comentado todo lo que ya no es relevante para la pantalla de Game Over
+        //Comentado todo lo que ya no es relevante para la pantalla de Game Over
         //alert("You lose");
         this.treeSystem.stop();
         this.dinoCollision.destroy();
-        //Reinicia la escena
-        //this.scene.restart();
+        //this.scene.restart(); esto reinicia la escena automáticamente, se comenta porque ya no es necesario
         this.createGameOverMenu();
         this.score.stopUpdates();
       }
