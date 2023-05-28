@@ -32,10 +32,6 @@ export default class Dino extends Phaser.GameObjects.Sprite{
         this.play("run");
     }
 
-    touchingFloor(onFloor) {
-    this.isTouchingFloor = onFloor;
-  }
-
     //La función de salto le da velocidad al sprite en Y, solo si el booleano "canJump" es verdadero.
     //Además pausa las animaciones para evitar que el Dino camine en el aire
     jump(){
